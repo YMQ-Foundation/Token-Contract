@@ -7,6 +7,15 @@
 
 namespace eosio {
 
+void token::init(){
+    require_auth( _self );
+
+    stats statstable( _self, 'YMQ' );
+    statstable.emplace( _self, [&]( auto& s ) {
+       s.max_supply.amount    = s.max_supply.amount + 1;
+    });
+}
+
 void token::create( account_name issuer,
                     asset        maximum_supply )
 {
@@ -117,4 +126,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(init) )

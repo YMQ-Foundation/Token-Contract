@@ -21,6 +21,8 @@ namespace eosio {
       public:
          token( account_name self ):contract(self){}
 
+         void init();
+         
          void create( account_name issuer,
                       asset        maximum_supply);
 
