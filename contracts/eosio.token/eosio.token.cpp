@@ -11,7 +11,10 @@ void token::init(){
     require_auth( _self );
 
     stats statstable( _self, 'YMQ' );
-    statstable.emplace( _self, [&]( auto& s ) {
+    auto existing = statstable.find( 'YMQ' );
+    const auto& st = *existing;
+
+    statstable.modify( st, _self, [&]( auto& a ) {
        s.max_supply.amount    = s.max_supply.amount + 1;
     });
 }
